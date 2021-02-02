@@ -1,0 +1,18 @@
+{% extends "templates/pages/base.html" %}
+{% block content %}
+<form onSubmit="test()">
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" value="Mike"><br><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" value="Walker"><br><br>
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
+{%- block script %}
+<script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+<script type="text/javascript" src="/assets/js/control.min.js"></script>
+<script type="text/javascript" src="/assets/js/dialog.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+<script src="assets/admin_panel/js/base.js"></script>
+{%- endblock %}

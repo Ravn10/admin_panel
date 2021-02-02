@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappe.io/ -->
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>{% block title %} {{ title | striptags }} {% endblock %}</title>
+    <meta name="generator" content="frappe">
+    {% block favicon %}
+
+    <link rel="shortcut icon" href="{{fevicon}}">
+
+    {% endblock %}
+    {%- block head -%}
+        {% block meta_block %}{% endblock %}
+        {% if head_html is defined -%}
+        {{ head_html or "" }}
+        {%- endif %}
+    <!--
+        Favicons
+        =============================================
+        -->
+
+
+        <!--
+        Stylesheets
+        =============================================
+
+        -->
+        <!-- Default stylesheets-->
+        <!-- Template specific stylesheets-->
+
+        <!-- Main stylesheet and color file-->
+
+
+        {%- block head_include %}{{ head_include or "" }}{% endblock -%}
+        {%- block style %}
+        {%- endblock -%}
+    {%- endblock -%}
+    <script>
+
+
+        window.frappe = {};
+        frappe.ready_events = [];
+        frappe.ready = function(fn) {
+            frappe.ready_events.push(fn);
+        }
+        window.dev_server = {{ dev_server }};
+    </script>
+</head>
+{% block body %}
+<!-- <body data-path="{{ path }}"> -->
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+
+    <!-- <div class="loader"></div> -->
+
+<!-- <div id="wrapper" class="wrapper-full "> -->
+    {%- block navbar -%}
+        <header id="header" class=" variantleft type_1">
+        </header>
+    {%- endblock -%}
+
+        {% block content %}
+        {% endblock %}
+
+    {%- block footer -%}
+    {%- endblock -%}
+
+<!-- </div> -->
+
+
+
+    {% block base_scripts %}
+    <script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+    <script type="text/javascript" src="/assets/js/control.min.js"></script>
+    <script type="text/javascript" src="/assets/js/dialog.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+    {% endblock %}
+    {%- if js_globals is defined %}
+    <script>
+
+    {%- for key, value in js_globals.iteritems() %}
+    window.{{ key }} = "{{ value[0] }}";
+    {%- endfor -%}
+    </script>
+    {% endif -%}
+
+    {%- block script %}{%- endblock %}
+    <!-- csrf_token -->
+    {%- block body_include %}{{ body_include or "" }}{% endblock -%}
+
+
+</body>
+</main>
+{% endblock %}
+</html>
