@@ -24,8 +24,8 @@ function create_customer(){
 		callback: function(r) {
 			console.log(r.message)
 			if (r.message) {
-				window.location.href="success?message="+r.message;
-				window.location.href="signup-flow-2?message="+r.message;
+				// window.location.href="success?message="+r.message;
+				window.location.href="register-2?message="+r.message;
 			}
 		}
 	});

@@ -1,0 +1,166 @@
+    <script>document.getElementsByTagName("html")[0].className += " js";</script>
+    <link rel="stylesheet" href="assets/admin_panel/css/timeline_2.css">
+    <link rel="stylesheet" href="assets/admin_panel/css/timeline_2.scss">
+  <body>
+
+    <section class="cd-h-timeline js-cd-h-timeline margin-bottom-md">
+
+      <div class="cd-h-timeline__container container">
+        <div class="cd-h-timeline__dates">
+          <div class="cd-h-timeline__line">
+            <ol>
+              {% for d in data %}
+              {% if loop.index==1 %}
+                
+              <li>
+                <a href="#0" data-date="{{frappe.utils.formatdate(d.creation, "dd/MM/yyyy")}}" class="cd-h-timeline__date cd-h-timeline__date--selected">{{frappe.utils.formatdate(d.creation, "dd-MM-yyyy")}}
+                  <br>
+                  {% if d.nos == 1 %}
+                    <i class="fas fa fa-circle" href="#0" ></i>
+                  {% else %}
+                    {% for number in range(1, d.nos, 1) %}
+                    <i class="fas fa fa-circle" href="#0"></i>
+                    {% endfor %}
+                  {% endif %}
+                </a>
+                
+              </li>
+              
+              {% endif %}
+              {% endfor %}
+              {% for d in data %}
+                {% if loop.index!=1 %}                
+                <li>
+                  <a href="#0" data-date="{{frappe.utils.formatdate(d.creation, "dd/MM/yyyy")}}" class="cd-h-timeline__date ">{{frappe.utils.formatdate(d.creation, "dd-MM-yyyy")}}
+                    <br>
+                    {% if d.nos == 1 %}
+                    <i class="fas fa fa-circle" href="#0"></i>
+                  {% else %}
+                    {% for number in range(1, d.nos, 1) %}
+                    <i class="fas fa fa-circle" href="#0"></i>
+                    {% endfor %}
+                  {% endif %}
+                  </a>
+                  
+                </li>
+              {% endif %}
+              {% endfor %}
+            </ol>
+  
+            <span class="cd-h-timeline__filling-line" aria-hidden="true"></span>
+          </div> <!-- .cd-h-timeline__line -->
+        </div> <!-- .cd-h-timeline__dates -->
+          
+        <ul>
+          <li><a href="#0" class="text-replace cd-h-timeline__navigation cd-h-timeline__navigation--prev cd-h-timeline__navigation--inactive">Prev</a></li>
+          <li><a href="#0" class="text-replace cd-h-timeline__navigation cd-h-timeline__navigation--next">Next</a></li>
+        </ul>
+      </div> <!-- .cd-h-timeline__container -->
+  
+      <div class="cd-h-timeline__events">
+        <ol>
+          {% for d in data %}
+          <li class="cd-h-timeline__event text-component">
+            {% if loop.index==1 %}
+            <script>
+              document.getElementByTag("li").add("cd-h-timeline__event--selected")
+            </script>
+            
+            {% endif %}
+            <div class="cd-h-timeline__event-content container">
+              <h2 class="cd-h-timeline__event-title">{{loop.index}}{{d.owner}}</h2>
+              <em class="cd-h-timeline__event-date">{{frappe.utils.formatdate(d.creation, "dd-MM-yyyy")}}</em>
+              <p class="cd-h-timeline__event-description color-contrast-medium"> 
+                {{d.subject}}
+              </p>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+        <!-- table starts -->
+          
+          <div class="table-responsive">
+            <div>
+                <table class="table align-items-center">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="sort" data-sort="name">Project</th>
+                            <th scope="col" class="sort" data-sort="budget">Date</th>
+                            <th scope="col" class="sort" data-sort="status">Status</th>
+                            <th scope="col">Users</th>
+                            <th scope="col" class="sort" data-sort="completion">Completion</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                      {% for d in data %}
+                      {% if loop.index==1 %}
+                      <script>
+                        document.getElementByTag("tr").add("cd-h-timeline__event--selected")
+                      </script>
+                      
+                      {% endif %}
+                        <tr class="cd-h-timeline__event--selected">
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <a href="#" class="avatar rounded-circle mr-3">
+                                        
+                                    </a>
+                                    <div class="media-body">
+                                        <span class="name mb-0 text-sm">{{d.subject}}</span>
+                                    </div>
+                                </div>
+                            </th>
+                            <td class="budget">
+                              {{frappe.utils.formatdate(d.creation, "dd-MM-yyyy")}}
+                            </td>
+                            <td>
+                                <span class="badge badge-dot mr-4">
+                              <i class="bg-warning"></i>
+                              <span class="status">{{d.owner}}</span>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="avatar-group">
+                                    <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
+                                        <img alt="Image placeholder" src="https://demos.creative-tim.com/argon-dashboard-pro/assets/img/theme/team-1.jpg">
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="completion mr-2">60%</span>
+                                    <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- <td class="text-right">
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+                            </td> -->
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+          
+          <!-- table ends -->
+      </div> <!-- .cd-h-timeline__events -->
+    </section>
+    <script src="assets/admin_panel/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+    <script src="assets/admin_panel/js/swipe-content.js"></script> <!-- A Vanilla JavaScript plugin to detect touch interactions -->
+    <script src="assets/admin_panel/js/main.js"></script>
+  </body>
+  
