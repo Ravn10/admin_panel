@@ -1,0 +1,62 @@
+<h4 class="mb-3" style="line-height: 1.5;">Manage subscription for <mark>{{site}}</mark></h4>
+{% if trial %}
+<div role="alert" class="alert alert-secondary"><div><span>
+    Your trial expires on <b> {{trial_expiry}} </b></span> <!----></div> <div>
+Number of users in current subscription:  <b> {{user_count}} </b></div></div>
+{% endif %}
+
+<div class="my-5"><h4>Choose your plan</h4> 
+    <div class="input-group mb-3">
+        <div class="input-group-prepend" style="margin-right: -5px;">
+            <label for="billing_cycle" class="input-group-text" style="border-top-left-radius: 3px; border-bottom-left-radius: 3px;">Billing Cycle</label>
+        </div> 
+        <select id="billing_cycle" class="form-control">
+            <option value="Yearly">
+                Annual
+            </option>
+            <option value="Monthly">
+                Monthly
+            </option>
+        </select>
+    </div> 
+    <div class="row">
+        <div class="col-12 col-md mb-3 mb-md-0">
+            <div class="card plan-card border border-primary">
+                <div class="bg-primary rounded-circle text-white d-flex justify-content-center align-items-center" style="width: 1.5em; position: absolute; height: 1.5em; right: 1rem; top: 1rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div> 
+                <div class="card-body">
+                    <h6 class="card-title text-uppercase ">
+                    Cloud
+                        <span class="ml-2" style="font-size: 1em; color: green;">
+                            25% Off
+                        </span>
+                    </h6> 
+                    <div class="row">
+                        <div class="col-6 col-md-12 text-dark text-nowrap">
+                            <span>
+                                <span style="font-size: 1.5em;">₹</span> 
+                                <span class="display-4" style="font-size: 2.5rem;">90,000</span> 
+                                <span class="text-muted">/year</span> 
+                                <br> 
+                                <span class="display-4 ml-4 text-muted" style="font-size: 1.6rem;"><s>120,000</s></span>
+                            </span>
+                        </div> 
+                        <div class="col-6 col-md-12 small mt-md-2">
+                            <div class="d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check mr-2 mt-1"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                5 users
+                            </div> <div class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check mr-2 mt-1"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                25GB of storage
+                            </div> <div class="d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check mr-2 mt-1"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                25000 emails per month
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
