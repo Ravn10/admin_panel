@@ -91,13 +91,13 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"Bench Manager Command": {
+		"on_update": "admin_panel.site_utils.send_email_on_site_creation",
+		#"on_cancel": "method",
+		#"on_trash": "method"
+	}
+}
 
 # Scheduled Tasks
 # ---------------

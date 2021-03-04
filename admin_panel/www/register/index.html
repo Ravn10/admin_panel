@@ -10,12 +10,13 @@
                     <label for="subdomain">Site Name</label>
                     <div class="input-group">
                         <label class="mt-6 hidden">
-                            <input id="csrf_input_data" name="csrf_token" class="form-input" value="">
+                            <input id="csrf_input_data" name="csrf_token" class="form-input" value={{csfr}}>
                         </label>
                         <input type="text" id="subdomain" name="subdomain" class="form-control" placeholder="yourcompany" autocomplete="off" onchange="validate_subdomain(this)">
                         <div class="input-group-append">
-                            <span class="input-group-text rounded-right">.erpnext.com</span>
+                            <span class="input-group-text rounded-right">{{company_domain}}</span>
                         </div>
+                        <div class="invalid-feedback">erpnext.erpnext.com is already taken</div>
                     </div>
                     <small class="form-text"></small>
                 </div>
@@ -39,14 +40,14 @@
                     <input type="tel" id="phone" class="form-control" name="phone_number" autocomplete="tel">
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" class="form-control" name="password" autocomplete="new-password">
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" id="terms_check" class="custom-control-input" name="terms_check">
+                        <input type="checkbox" id="terms_check" class="custom-control-input" name="terms_check" required>
                         <label class="custom-control-label" for="terms_check">
                             I have read, understood and agree to the <a href="/terms" target="_blank">Terms of
                                 Use</a>
@@ -121,7 +122,7 @@
                 </div>
             </form>
             <!-- 4. Business Settings -->
-            <form class="form-step" data-step="4" data-action="business_settings" style="display: none;">
+            <form class="form-step" data-step="4" data-action="business_settings" style="display: {{form_4}};">
                 <div class="form-group">
                     <label for="company_name">Company Name</label>
                     <input type="text" class="form-control" id="company_name" name="company">
@@ -129,7 +130,7 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="users">Number of Users</label>
-                        <input type="number" class="form-control" id="users" name="users">
+                        <input type="number" class="form-control" id="users" name="users" required>
                     </div>
                     <div class="form-group col">
                         <label for="designation">Your Designation</label>
@@ -164,14 +165,24 @@
                     <button type="submit" class="ml-4 btn btn-primary btn-step-4">Next</button>
                 </div>
             </form>
+            <!-- 5. Preparing Site -->
+            <div class="thanks" style="display: {{thanks}};">
+                <p>Thanks You!!</p>
+                <br>
+                <p>We will notify you on email once the erp for site {{site}} is ready.</p>
+            </div>
+
         </div>
     </div>
 </div>
 {% block script %}
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
-		document.getElementById("csrf_input_data").value = frappe.generate_hash();
-	})
+	document.getElementById("#myFormId").addEventListener("submit", function(e){
+        if(!isValid){
+            e.preventDefault();    //stop form from submitting
+        }
+          //do whatever an submit the form
+    });
 
 	function submitForm() {
 		let frm = document.getElementsByName('personal-detail-form')[0];
@@ -187,18 +198,31 @@
     function validate_subdomain(input) {
         let $input = $(input);
         let subdomain = $input.val();
-        let error = controller.validate_value("subdomain", subdomain);
-        if (error) {
-            controller.show_input_error("subdomain", error);
-        } else {
-            check_if_available(subdomain).then((available) => {
-                controller.show_input_error(
-                    "subdomain",
-                    !available ? `${subdomain}.erpnext.com is already taken` : ""
-                );
-            });
-        }
+        let errorfield = document.getElementsByClassName("invalid-feedback")[0];
+        frappe.call({
+            method:"admin_panel.www.register.index.validate_domain",
+            args:{"subdomain":subdomain},
+            callback:(r)=>{
+                if(r.message){
+                    //alert(subdomain)
+                    errorfield.style.display = "block"
+                    errorfield.style.color="red"
+                    errorfield.innerHTML = subdomain + " is already taken";
+                }
+                else{
+                    //alert("no" + subdomain)
+                    errorfield.style.display = "block"
+                    errorfield.style.color="green"
+                    errorfield.innerHTML = subdomain + " is available";
+                }
+            }
+        })
     }
     
 </script>
+<script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+<script type="text/javascript" src="/assets/js/control.min.js"></script>
+<script type="text/javascript" src="/assets/js/dialog.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
 {% endblock %}
