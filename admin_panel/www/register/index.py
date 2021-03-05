@@ -4,6 +4,7 @@ from frappe.twofactor import authenticate_for_2factor
 from admin_panel.site_utils import create_site_for_saas
 
 def get_context(context):
+    context.form_1 = "block"
     context.csfr = frappe.generate_hash()
     frappe.local.session.data.csrf_token = frappe.generate_hash()
     context.no_cache = 1
@@ -24,6 +25,8 @@ def get_context(context):
     if frappe.form_dict.email:
         email = frappe.form_dict.email
         context.status , context.signup_msg = sign_up(email=email,full_name=full_name,redirect_to='/prepare_site')
+        if not context.status:
+            context.form_1 = "none"
   
 @frappe.whitelist(allow_guest=True)
 def create_lead(full_name,email):

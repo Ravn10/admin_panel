@@ -5,7 +5,7 @@
             <div class="alert alert-danger form-alert-error small" style="display: none;" role="alert"></div>
             <!-- 1. Personal Details -->
             
-            <form method="POST" name="personal-detail-form" class="form-step" data-step="1" data-action="validate_and_submit_personal_details" style="display: block;">    
+            <form method="POST" name="personal-detail-form" class="form-step" data-step="1" data-action="validate_and_submit_personal_details" style="display: {{form_1}};">    
                 <div class="form-row">
                     <div class="form-group col-12 col-sm-6">
                         <label class="mt-6 hidden">
@@ -64,14 +64,16 @@
                     <button type="submit" class="ml-4 btn btn-primary btn-step-2">Verify Code</button>
                 </div>
             </form> -->
-            <div class="card" style="display: {{form_2}}""> {{signup_msg}}</div>
+           
             {% if status == 0 %}
+            <div class="card" style="display: {{form_2}}""> {{signup_msg}}</div>
             <div>
                 <a href="/login">Login</a>
             </div>
+            </div>
             {% endif %}
  
-        </div>
+       
     </div>
 </div>
 {% block script %}
