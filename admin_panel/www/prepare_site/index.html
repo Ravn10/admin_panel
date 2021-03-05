@@ -1,0 +1,151 @@
+<div class="col-xl-5 col-lg-6 col-md-7 col-sm-9 mx-auto" id="user-signup" data-on-complete="redirect_to_prepare_site" data-validators="field_validators">
+    <div class="card">
+        <div class="card-body">
+            <div class="alert alert-primary form-alert-info small" style="display: none;" role="alert"></div>
+            <div class="alert alert-danger form-alert-error small" style="display: none;" role="alert"></div>
+            <!-- 3. Regional Settings -->
+            <form method="POST"  name="regional_settings" class="form-step" data-step="3" data-action="validate_and_submit_personal_details" style="display: {{form_3}};">
+                <div class="form-group">
+                    <label for="subdomain">Company Name</label>
+                    <div class="input-group">
+                        <!-- <label class="mt-6 hidden">
+                            <input id="csrf_input_data" name="csrf_token" class="form-input" value={{csfr}}>
+                        </label> -->
+                        <input type="text" id="subdomain" name="subdomain" class="form-control" style="font-size:1rem" placeholder="yourcompany" autocomplete="off" onchange="validate_subdomain(this)">
+                        <div class="input-group-append">
+                            <span class="input-group-text rounded-right">{{company_domain}}</span>
+                        </div>
+                        <div class="invalid-feedback">erpnext.erpnext.com is already taken</div>
+                    </div>
+                    <small class="form-text"></small>
+                </div>
+                <div class="form-group">
+                    <label for="company_name">Company Name</label>
+                    <input type="text" class="form-control" id="company_name" name="company">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="users">Number of Users</label>
+                        <input type="number" class="form-control" id="users" name="users" min=2 required >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" class="custom-select" name="country">
+                        {% for country in countries%}
+                        <option>{{country}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="domain">What does your organization do?</label>
+                    <select id="domain" class="custom-select" name="domain">
+                        <option value=""></option>
+                    {% for domain in domains%}
+                        <option value="{{domain}}">{{domain}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="currency">Currency</label>
+                        <select id="currency" class="custom-select" name="currency">
+                            {% for currency in currencies%}
+                            <option value="{{currency}}">{{currency}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="language">Language</label>
+                        <select id="language" class="custom-select" name="language">
+                            {% for language in languages%}
+                            <option value="{{language}}">{{language}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="timezone">Timezone 3</label>
+                    <select id="timezone" class="custom-select" name="timezone">
+                        {% for timezone in timezones %}
+                        <option value="{{timezone}}">{{timezone}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="source">Where did you hear about ERPNext?</label>
+                    <select id="source" class="custom-select" name="referral_source">
+                        <option></option>
+                        <option value="LinkedIn">LinkedIn</option>
+                        <option value="Twitter">Twitter</option>
+                        <option value="Recommended by a friend/colleague">Recommended by a friend/colleague</option>
+                        <option value="Blogs/Reviews">Blogs/Reviews</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <div></div>
+                    <button type="submit" class="ml-4 btn btn-primary btn-step-4">Start Trial</button>
+                </div>
+            </form>
+            <!-- 5. Preparing Site -->
+            <div class="thanks" style="display: {{thanks}};">
+                <p>Thanks You!!</p>
+                <br>
+                <p>We will notify you on email once the erp for site {{site}} is ready.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% block script %}
+<script>
+	document.getElementById("#myFormId").addEventListener("submit", function(e){
+        if(!isValid){
+            e.preventDefault();    //stop form from submitting
+        }
+          //do whatever an submit the form
+    });
+
+	function submitForm() {
+		let frm = document.getElementsByName('regional_settings')[0];
+		if (frm.checkValidity()) {
+			frm.submit(); // Submit the form
+			frm.reset();  // Reset all form data
+			return false; // Prevent page refresh
+		} else {
+			frm.reportValidity()
+		}
+	}
+
+    function validate_subdomain(input) {
+        let $input = $(input);
+        let subdomain = $input.val();
+        let errorfield = document.getElementsByClassName("invalid-feedback")[0];
+        frappe.call({
+            method:"admin_panel.www.register.index.validate_domain",
+            args:{"subdomain":subdomain},
+            callback:(r)=>{
+                if(r.message){
+                    //alert(subdomain)
+                    errorfield.style.display = "block"
+                    errorfield.style.color="red"
+                    errorfield.innerHTML = subdomain + " is already taken";
+                }
+                else{
+                    //alert("no" + subdomain)
+                    errorfield.style.display = "block"
+                    errorfield.style.color="green"
+                    errorfield.innerHTML = subdomain + " is available";
+                }
+            }
+        })
+    }
+    
+</script>
+<script>frappe.csrf_token = "None";</script>
+<script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+<script type="text/javascript" src="/assets/js/control.min.js"></script>
+<script type="text/javascript" src="/assets/js/dialog.min.js"></script>
+<script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+{% endblock %}
