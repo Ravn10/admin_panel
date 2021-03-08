@@ -13,13 +13,6 @@ def create_site_for_saas(site_name, install_erpnext, key, domain):
     mysql_password = get_decrypted_password("SAAS Settings","SAAS Settings","db_password")
     admin_password = get_decrypted_password("SAAS Settings","SAAS Settings","admin_password")
     custom_domain = domain + "."+ frappe.db.get_single_value("SAAS Settings","saas_domain")
-    # site_domain_map = frappe.get_doc({
-    #                             "doctype":"Site Domain Map",
-    #                             "site":site_name,
-    #                             "domain":custom_domain
-    #                         })
-    # site_domain_map.insert()
-    frappe.db.commit()
     create_site(site_name, install_erpnext, mysql_password, admin_password, key)
 
 def update_custom_domain(doc, method=None):
@@ -34,5 +27,14 @@ def update_custom_domain(doc, method=None):
 
 def send_email_on_site_creation(doc,method=None):
     if doc.status == "Success":
-        pass
-    pass
+        frappe.publish_progress(
+			99  / 100,
+			title = "Site Created",
+			description = "Site Created"
+		)
+    else:
+        frappe.publish_progress(
+			99  / 100,
+			title = "Site Not Created",
+			description = "Site Not Created"
+		)
