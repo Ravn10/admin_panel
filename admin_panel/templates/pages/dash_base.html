@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappe.io/ -->
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>{% block title %} {{ title | striptags }} {% endblock %}</title>
+    <meta name="generator" content="frappe">
+    {% block favicon %}
+
+    <link rel="shortcut icon" href="{{fevicon}}">
+
+    {% endblock %}
+    {%- block head -%}
+        {% block meta_block %}{% endblock %}
+        {% if head_html is defined -%}
+        {{ head_html or "" }}
+        {%- endif %}
+        <!--
+        Stylesheets
+        =============================================-->
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="/assets/admin_panel/dashboard/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="/assets/admin_panel/dashboard/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Page plugins -->
+  <link rel="stylesheet" href="/assets/admin_panel/dashboard/assets/vendor/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="/assets/admin_panel/dashboard/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="/assets/admin_panel/dashboard/css/dashboard.css" type="text/css">
+
+<!-- Default stylesheets-->
+<!-- Template specific stylesheets-->
+ <!-- Anti-flicker snippet (recommended) 
+<style>.async-hide { opacity: 0 !important} </style>
+<script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+(a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+})(window,document.documentElement,'async-hide','dataLayer',4000,
+{'GTM-K9BGS8K':true});</script>
+
+<!-- Analytics-Optimize Snippet
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-46172202-22', 'auto', {allowLinker: true});
+ga('set', 'anonymizeIp', true);
+ga('require', 'GTM-K9BGS8K');
+ga('require', 'displayfeatures');
+ga('require', 'linker');
+ga('linker:autoLink', ["2checkout.com","avangate.com"]);
+</script>
+<!-- end Analytics-Optimize Snippet -->
+
+<!-- Google Tag Manager
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NKDMSK6');</script>
+<!-- End Google Tag Manager -->
+<!-- Main stylesheet and color file-->
+
+
+        {%- block head_include %}{{ head_include or "" }}{% endblock -%}
+        {%- block style %}
+        {%- endblock -%}
+    {%- endblock -%}
+    <script>
+
+
+        window.frappe = {};
+        frappe.ready_events = [];
+        frappe.ready = function(fn) {
+            frappe.ready_events.push(fn);
+        }
+        window.dev_server = {{ dev_server }};
+    </script>
+</head>
+{% block body %}
+<!-- <body data-path="{{ path }}"> -->
+<body data-spy="scroll" data-target=".onpage-navigation" data-offset="60">
+    <main>
+
+    <!-- <div class="loader"></div> -->
+
+<!-- <div id="wrapper" class="wrapper-full "> -->
+    {%- block navbar -%}
+        <header id="header" class=" variantleft type_1">
+        </header>
+    {%- endblock -%}
+
+        {% block content %}
+        {% endblock %}
+
+    {%- block footer -%}
+    {%- endblock -%}
+
+<!-- </div> -->
+
+
+
+    {% block base_scripts %}
+    <script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+    <script type="text/javascript" src="/assets/js/control.min.js"></script>
+    <script type="text/javascript" src="/assets/js/dialog.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+    <script type="text/javascript" src="/assets/frappe/js/frappe/ui/chart.js"></script>
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="/assets/admin_panel/dashboard/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/admin_panel/dashboard/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/admin_panel/dashboard/assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="/assets/admin_panel/dashboard/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/admin_panel/dashboard/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Argon JS -->
+    <script src="/assets/admin_panel/dashboard/assets/js/dashboard.js?v=1.2.0"></script>
+    <!-- Demo JS - remove this in your project -->
+    <script src="/assets/admin_panel/dashboard/assets/js/demo.min.js"></script>
+    {% endblock %}
+    {%- if js_globals is defined %}
+    <script>
+
+    {%- for key, value in js_globals.iteritems() %}
+    window.{{ key }} = "{{ value[0] }}";
+    {%- endfor -%}
+    </script>
+    {% endif -%}
+
+    {%- block script %}
+    {%- endblock %}
+    <!-- csrf_token -->
+    {%- block body_include %}{{ body_include or "" }}{% endblock -%}
+
+
+</body>
+</main>
+{% endblock %}
+</html>
