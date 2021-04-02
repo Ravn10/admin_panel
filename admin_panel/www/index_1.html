@@ -1,18 +1,193 @@
-{% extends "templates/pages/base.html" %}
+{% extends "templates/pages/web_base.html" %}
+
+{%- block navbar -%}
+    {% include "templates/pages/web_navbar.html" %}
+{%- endblock -%}
+{% block style %}
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+.timeline {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .li {
+    transition: all 200ms ease-in;
+  }
+  
+  .timestamp {
+    margin-bottom: 20px;
+    padding: 0px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 100;
+  }
+  
+  .status {
+    padding: 0px 40px;
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid #D6DCE0;
+    position: relative;
+    transition: all 200ms ease-in;
+  }
+  .status h4 {
+    font-weight: 600;
+    padding-top: 10px;
+  }
+  .status:before {
+    content: "";
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    position: absolute;
+    top: -15px;
+    left: 42%;
+    transition: all 200ms ease-in;
+  }
+  
+  .li.complete .status {
+    border-top: 2px solid #083dc3;
+  }
+  .li.complete .status:before {
+    background-color: #083dc3;
+    border: none;
+    transition: all 200ms ease-in;
+  }
+  .li.complete .status h4 {
+    color: #083dc3;
+  }
+  
+  .timeline:before {
+    border-right: 0px solid #e9ecef;
+  }
+</style> 
+{%- endblock -%}
 {% block content %}
-<form onSubmit="test()">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" value="Mike"><br><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" value="Walker"><br><br>
-  <input type="submit" value="Submit">
-</form>
+<div class="main-content">
+    <!-- Header -->
+    <div class="header bg-gradient-primary py-7 py-lg-8 pt-lg-9">
+      <div class="container">
+        <div class="header-body text-center mb-7">
+          <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+              <h1 class="text-white">Create an account</h1>
+              <p class="text-lead text-white">Great!!! Lets take another step towards SUCCESS.</p>
+               
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+ <!-- Page content -->
+ <div class="container mt--9 pb-5">
+  <!-- Table -->
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card bg-secondary border border-soft">
+        <div class="card-header bg-transparent pb-5" style="padding-bottom: 20px!important;">
+          <div class="text-center">
+    
+            <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
+            <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+            
+            <ul class="timeline" id="timeline" style="padding-left: 0px;">
+              <li class="li complete">
+                <div class="timestamp">
+                  <!-- <span class="author">Abhi Sharma</span>
+                  <span class="date">11/15/2014<span> -->
+                </div>
+                <div class="status">
+                  <h4> Personal Info </h4>
+                </div>
+              </li>
+              <li class="li complete">
+                <div class="timestamp">
+                  <!-- <span class="author">PAM Admin</span>
+                  <span class="date">11/15/2014<span> -->
+                </div>
+                <div class="status">
+                  <h4>Email Verification</h4>
+                </div>
+              </li>
+              <li class="li ">
+                <div class="timestamp">
+                  <!-- <span class="author">Aaron Rodgers</span>
+                  <span class="date">11/15/2014<span> -->
+                </div>
+                <div class="status">
+                  <h4> Site Creation </h4>
+                </div>
+              </li>
+             </ul>      
+          </div>
+        </div>
+        <div class="card-body px-lg-5 py-lg-5">
+          <div class="text-center text-muted mb-4">
+            <!-- <small>Or sign up with credentials</small> -->
+            <!-- pagination-->
+           
+            <!-- end pagination -->
+              </div>
+              <form class='personal'role="form">
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                    </div>
+                    <input class="form-control" placeholder="Name" type="text">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                    </div>
+                    <input class="form-control" placeholder="Email" type="email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                    </div>
+                    <input class="form-control" placeholder="Password" type="password">
+                  </div>
+                </div>
+                <div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
+                <div class="row my-4">
+                  <div class="col-12">
+                    <div class="custom-control custom-control-alternative custom-checkbox">
+                      <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                      <label class="custom-control-label" for="customCheckRegister">
+                        <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary mt-4">Create account</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
-{%- block script %}
-<script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
-<script type="text/javascript" src="/assets/js/control.min.js"></script>
-<script type="text/javascript" src="/assets/js/dialog.min.js"></script>
-<script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
-<script src="assets/admin_panel/js/base.js"></script>
-{%- endblock %}
+
+{%- block footer -%}
+    {% include "templates/pages/dash_footer.html" %}
+{%- endblock -%}
