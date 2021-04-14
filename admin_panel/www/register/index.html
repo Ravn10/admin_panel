@@ -50,20 +50,21 @@
                 </div>
             </form>
             <!-- 2. Verify Email -->
-            <!-- <form class="form-step" data-step="2" data-action="verify_otp" style="display: {{form_2}};">
+            <form class="form-step" data-step="2" data-action="verify_otp" style="display: {{form_2}};">
                 <div class="form-group">
-                    <label for="verification_code">Verification Code</label>
+                    <p>Please check your email for accoint setup link.</p>
+                    <!-- <label for="verification_code">Verification Code</label>
                     <input type="text" id="verification_code" name="otp" class="form-control" aria-describedby="verification_code_help" autocomplete="one-time-code">
                     <small id="verification_code_help" class="form-text text-muted">
                         Enter the verification code you received at <strong class="verify-otp-email"></strong>
-                    </small>
+                    </small> -->
                 </div>
-                <div class="d-flex justify-content-center mt-8">
+                <!-- <div class="d-flex justify-content-center mt-8">
                     <div></div>
                     <button type="submit" class="btn btn-primary-light btn-resend-code" onclick="resend_otp(event)">Resend Code</button>
                     <button type="submit" class="ml-4 btn btn-primary btn-step-2">Verify Code</button>
-                </div>
-            </form> -->
+                </div> -->
+            </form>
            
             {% if status == 0 %}
             <div class="card" style="display: {{form_2}}""> {{signup_msg}}</div>
@@ -76,7 +77,7 @@
        
     </div>
 </div>
-{% block script %}
+
 <script>
 	document.getElementById("#myFormId").addEventListener("submit", function(e){
         if(!isValid){
@@ -103,4 +104,3 @@
 <script type="text/javascript" src="/assets/js/control.min.js"></script>
 <script type="text/javascript" src="/assets/js/dialog.min.js"></script>
 <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
-{% endblock %}

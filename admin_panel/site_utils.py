@@ -12,8 +12,9 @@ from bench_manager.bench_manager.utils import run_command
 def create_site_for_saas(site_name, install_erpnext, key, domain):
     mysql_password = get_decrypted_password("SAAS Settings","SAAS Settings","db_password")
     admin_password = get_decrypted_password("SAAS Settings","SAAS Settings","admin_password")
+    admin_password = frappe.db.get_single_value("SAAS Settings","default_admin_pwd")
     custom_domain = domain + "."+ frappe.db.get_single_value("SAAS Settings","saas_domain")
-    create_site(site_name, install_erpnext, mysql_password, admin_password, key)
+    create_site(site_name, install_erpnext, mysql_password, admin_password, key,domain)
 
 def update_custom_domain(doc, method=None):
     key =str(frappe.utils.datetime.datetime.now())
@@ -25,6 +26,21 @@ def update_custom_domain(doc, method=None):
     frappe.msgprint(commands)
     subprocess.call("sudo service nginx reload", shell=True)
 
+def update_customer_email(doc):
+    contacts = frappe.get_all('Contact',filters=[
+                                    ['Dynamic Link','link_doctype','=','Customer'],
+                                    ["Dynamic Link", "link_name", "=",doc.name],
+                                    ["Dynamic Link", "parenttype", "=", "Contact"]
+                                    ],
+                            fields=["name",'email_id','mobile_no']
+                    )
+    if contacts:
+        contact = contacts[0]
+        doc.customer_primary_contact = contact.name
+        doc.mobile_no = contact.mobile_no
+        doc.email_id = contact.email_id
+        doc.save()
+        
 def send_email_on_site_creation(doc,method=None):
     if doc.status == "Success":
         frappe.publish_progress(

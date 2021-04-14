@@ -21,28 +21,29 @@ def get_context(context):
         customer_doc =  get_party()
         customer_doc.customer_detail = str(frappe.form_dict)
         create_site_for_saas(site_name=frappe.form_dict.subdomain,install_erpnext=True,
-                    key=format(frappe.utils.datetime.date.today()),
+                    key=format(frappe.utils.datetime.datetime.strftime(frappe.utils.datetime.datetime.now(),"%Y-%m-%d %H:%M:%S")),
                     domain=frappe.form_dict.subdomain)
         context.thanks = "block"
         context.form_3 = "none"
-    
+        context.site = frappe.form_dict.subdomain
+
 @frappe.whitelist()
 def get_party_():
     return get_party()
 
-@frappe.whitelist(allow_guest=True)
-def create_site(site_name, install_erpnext, mysql_password, admin_password, key):
-	verify_whitelisted_call()
-	commands = ["bench new-site --mariadb-root-password {mysql_password} --admin-password {admin_password} {site_name}".format(site_name=site_name,
-		admin_password=admin_password, mysql_password=mysql_password)]
-	if install_erpnext == "true":
-		with open('apps.txt', 'r') as f:
-			app_list = f.read()
-		if 'erpnext' not in app_list:
-			commands.append("bench get-app erpnext")
-		commands.append("bench --site {site_name} install-app erpnext".format(site_name=site_name))
-	frappe.enqueue('bench_manager.bench_manager.utils.run_command',
-		commands=commands,
-		doctype="Bench Settings",
-		key=key
-	)
+# @frappe.whitelist(allow_guest=True)
+# def create_site(site_name, install_erpnext, mysql_password, admin_password, key):
+# 	verify_whitelisted_call()
+# 	commands = ["bench new-site --mariadb-root-password {mysql_password} --admin-password {admin_password} {site_name}".format(site_name=site_name,
+# 		admin_password=admin_password, mysql_password=mysql_password)]
+# 	if install_erpnext == "true":
+# 		with open('apps.txt', 'r') as f:
+# 			app_list = f.read()
+# 		if 'erpnext' not in app_list:
+# 			commands.append("bench get-app erpnext")
+# 		commands.append("bench --site {site_name} install-app erpnext".format(site_name=site_name))
+# 	frappe.enqueue('bench_manager.bench_manager.utils.run_command',
+# 		commands=commands,
+# 		doctype="Bench Settings",
+# 		key=key
+# 	)

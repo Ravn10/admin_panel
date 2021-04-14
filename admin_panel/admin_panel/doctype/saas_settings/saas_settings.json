@@ -1,5 +1,4 @@
 {
- "actions": [],
  "creation": "2021-03-03 17:18:16.094813",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -7,7 +6,8 @@
  "field_order": [
   "saas_domain",
   "db_password",
-  "admin_password"
+  "admin_password",
+  "default_admin_pwd"
  ],
  "fields": [
   {
@@ -24,12 +24,15 @@
    "fieldname": "admin_password",
    "fieldtype": "Password",
    "label": "Admin Password"
+  },
+  {
+   "fieldname": "default_admin_pwd",
+   "fieldtype": "Data",
+   "label": "Default Admin Pwd For All Sites"
   }
  ],
- "index_web_pages_for_search": 1,
  "issingle": 1,
- "links": [],
- "modified": "2021-03-04 10:55:05.119964",
+ "modified": "2021-04-13 11:43:14.033272",
  "modified_by": "Administrator",
  "module": "Admin Panel",
  "name": "SAAS Settings",
