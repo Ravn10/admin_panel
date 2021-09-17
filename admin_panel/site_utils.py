@@ -26,7 +26,7 @@ def update_custom_domain(doc, method=None):
     frappe.msgprint(commands)
     subprocess.call("sudo service nginx reload", shell=True)
 
-def update_customer_email(doc):
+def update_customer_email(doc,method=None):
     contacts = frappe.get_all('Contact',filters=[
                                     ['Dynamic Link','link_doctype','=','Customer'],
                                     ["Dynamic Link", "link_name", "=",doc.name],

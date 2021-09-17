@@ -9,9 +9,9 @@ from bench_manager.bench_manager.utils import verify_whitelisted_call, safe_deco
 def get_context(context):
     context.company_domain = frappe.db.get_single_value("SAAS Settings","saas_domain")
     context.countries = frappe.db.sql_list('''select name from `tabCountry`''')
-    context.currencies = frappe.db.sql_list('''select name from `tabCurrency`''')
-    context.languages = frappe.db.sql_list('''select language_name from `tabLanguage`''')
-    context.timezones = get_timezones()['timezones']
+    # context.currencies = frappe.db.sql_list('''select name from `tabCurrency`''')
+    # context.languages = frappe.db.sql_list('''select language_name from `tabLanguage`''')
+    # context.timezones = get_timezones()['timezones']
     context.domains = frappe.db.sql_list('''select name from `tabDomain`''')
     context.thanks = "none"
     context.title = frappe.session.user
@@ -26,24 +26,31 @@ def get_context(context):
         context.thanks = "block"
         context.form_3 = "none"
         context.site = frappe.form_dict.subdomain
+        try:
+            request_args = {
+                'site':frappe.form_dict.subdomain,
+                'subdomain':frappe.form_dict.subdomain,
+                'domain':frappe.form_dict.domain,
+                'company':frappe.form_dict.company,
+                'country':frappe.form_dict.country,
+                'source':frappe.form_dict.source,
+                'customer':get_party().get('name'),
+                'user':frappe.session.user,
+                'company':frappe.form_dict.company,
+                'no_of_users':frappe.form_dict.users
+            }
+        except:
+            pass
+        if request_args:
+            prepare_site_request(request_args)
 
 @frappe.whitelist()
 def get_party_():
     return get_party()
 
-# @frappe.whitelist(allow_guest=True)
-# def create_site(site_name, install_erpnext, mysql_password, admin_password, key):
-# 	verify_whitelisted_call()
-# 	commands = ["bench new-site --mariadb-root-password {mysql_password} --admin-password {admin_password} {site_name}".format(site_name=site_name,
-# 		admin_password=admin_password, mysql_password=mysql_password)]
-# 	if install_erpnext == "true":
-# 		with open('apps.txt', 'r') as f:
-# 			app_list = f.read()
-# 		if 'erpnext' not in app_list:
-# 			commands.append("bench get-app erpnext")
-# 		commands.append("bench --site {site_name} install-app erpnext".format(site_name=site_name))
-# 	frappe.enqueue('bench_manager.bench_manager.utils.run_command',
-# 		commands=commands,
-# 		doctype="Bench Settings",
-# 		key=key
-# 	)
+# create site preparation request
+@frappe.whitelist(allow_guest=True)
+def prepare_site_request(args):
+    psr = frappe.get_doc({"doctype":"Prepare Site Request"})
+    psr.update(args)
+    psr.insert(ignore_permissions=True)

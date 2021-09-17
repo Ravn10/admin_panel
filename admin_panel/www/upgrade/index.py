@@ -1,7 +1,7 @@
 import frappe
 
 def get_context(context):
-    context.site = "aniket.snaturalc.in"
+    context.site_options = frappe.get_all("Site",filters={'owner':frappe.session.user},fields=['name'])
     customer_details = get_site_details(context.site)
     context.trial = 1
     context.trial_expiry = "Today"

@@ -1,4 +1,12 @@
-<h4 class="mb-3" style="line-height: 1.5;">Manage subscription for <mark>{{site}}</mark></h4>
+<h4 class="mb-3" style="line-height: 1.5;">Manage subscription for Site
+    <select id="site" class="form-control">
+        {% for option in site_options%}
+        <option value="{{option.name}}">
+            {{option.name}}
+        </option>
+        {% endfor %}
+    </select>
+    <!-- <mark></mark></h4> -->
 {% if trial %}
 <div role="alert" class="alert alert-secondary"><div><span>
     Your trial expires on <b> {{trial_expiry}} </b></span> <!----></div> <div>
